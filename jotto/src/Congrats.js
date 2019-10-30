@@ -1,4 +1,5 @@
 import React from 'react';
+import Proptypes from 'prop-types';
 
 /**
  * Functional react component for congratulatory message.
