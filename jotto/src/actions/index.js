@@ -1,15 +1,9 @@
+import { getLatterMatchCount } from '../helpers';
+
 export const actionTypes = {
   CORRECT_GUESS: 'CORRECT_GUESS',
   GUESS_WORD: 'GUESS_WORD'
 };
-
-// /**
-//  * @function correctGuess
-//  * @returns {object} - Action object with type 'CORRECR_GUESS'
-//  */
-// export function correctGuess() {
-//   return { type: actionTypes.CORRECT_GUESS };
-// }
 
 /**
  * Returns Redux Thunk function that dispatches GUESS_WORD action
@@ -19,5 +13,17 @@ export const actionTypes = {
  * @return {function} - Redux Thunk function.
  */
 export const guessWord = guessedWord => {
-  return (dispatch, getState) => {};
+  return (dispatch, getState) => {
+    const secretWord = getState().secretWord;
+    const latterMatchCount = getLatterMatchCount(guessedWord, secretWord);
+
+    dispatch({
+      type: actionTypes.GUESS_WORD,
+      payload: { guessedWord, latterMatchCount }
+    });
+
+    if (guessedWord === secretWord) {
+      dispatch({ type: actionTypes.CORRECT_GUESS });
+    }
+  };
 };
