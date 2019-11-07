@@ -19,8 +19,6 @@ const setup = (initialState = {}) => {
   return wrapper;
 };
 
-setup();
-
 describe('render', () => {
   describe('word has not been guessed', () => {
     let wrapper;
@@ -62,4 +60,16 @@ describe('render', () => {
   });
 });
 
-describe('updating state', () => {});
+describe('redux props', () => {
+  test('has success piece of state as prop', () => {
+    const success = true;
+    const wrapper = setup({ success });
+    const successProp = wrapper.instance().props.success;
+    expect(successProp).toBe(success);
+  });
+  test('function "guessWord" action creator exists in props', () => {
+    const wrapper = setup();
+    const guessWordProp = wrapper.instance().props.guessWord;
+    expect(guessWordProp).toBeInstanceOf(Function);
+  });
+});
